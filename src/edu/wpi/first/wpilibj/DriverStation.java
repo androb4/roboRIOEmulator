@@ -104,6 +104,6 @@ public class DriverStation {
 	}
 	
 	public boolean isOperatorControl() {
-		return false;
+		return true;
 	}
 }
