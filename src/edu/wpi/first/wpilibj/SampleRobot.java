@@ -13,5 +13,10 @@ public class SampleRobot extends RobotBase {
 	public void operatorControl() {
 		
 	}
+
+	public void startCompetition() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

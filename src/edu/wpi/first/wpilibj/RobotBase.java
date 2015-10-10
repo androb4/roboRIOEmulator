@@ -1,5 +1,7 @@
 package edu.wpi.first.wpilibj;
 
+import com.androb4.roborioemulator.utils.RobotClassReader;
+
 public abstract class RobotBase {
 	protected final DriverStation ds;
 
@@ -8,34 +10,36 @@ public abstract class RobotBase {
 	}
 	
 	public boolean isEnabled() {
-		return isEnabled();
+		return ds.isEnabled();
 	}
 	
 	public boolean isDisabled() {
-		return isDisabled();
+		return ds.isDisabled();
 	}
 	
 	public boolean isAutonomous() {
-		return isAutonomous();
+		return ds.isAutonomous();
 	}
 	
 	public boolean isTest() {
-		return isTest();
+		return ds.isTest();
 	}
 	
 	public boolean isOperatorControl() {
-		return isOperatorControl();
+		return ds.isOperatorControl();
 	}
 	
+	public abstract void startCompetition();
+	
 	public static void main(String[] args) {
-		RobotBase robot;
+		System.out.println("Main");
+		RobotBase robot = null;
 		try {
-			robot = (RobotBase)RobotBase.class.getClassLoader().loadClass("com.androb4.helloworldfrc.Robot").newInstance();
+			robot = (RobotBase)RobotBase.class.getClassLoader().loadClass(RobotClassReader.getRobotClass()).newInstance();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		System.out.println("Main");
+		robot.startCompetition();
 	}
 }
