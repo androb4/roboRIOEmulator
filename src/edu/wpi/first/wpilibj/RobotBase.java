@@ -4,9 +4,11 @@ import com.androb4.roborioemulator.utils.RobotClassReader;
 
 public abstract class RobotBase {
 	protected final DriverStation ds;
+	protected final RoboRio rio;
 
 	protected RobotBase() {
 		ds = DriverStation.getInstance();
+		rio = RoboRio.getInstance();
 	}
 	
 	public boolean isEnabled() {

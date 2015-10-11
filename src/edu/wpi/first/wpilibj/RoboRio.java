@@ -6,7 +6,7 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
+import javax.swing.JProgressBar;
 
 @SuppressWarnings("serial")
 public class RoboRio extends JFrame {	
@@ -53,10 +53,7 @@ public class RoboRio extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(133, 280, 117, 29);
-		contentPane.add(btnNewButton);
+
 		setVisible(true);
 	}
 }
