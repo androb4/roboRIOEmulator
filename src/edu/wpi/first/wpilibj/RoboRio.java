@@ -48,6 +48,7 @@ public class RoboRio {
 		windowPosY = (int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight()-windowHeight)*(windowPosY/100.0));
 		
 		roboRio = new JFrame("RoboRIO");
+		roboRio.setResizable(false);
 		roboRio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		roboRio.setBounds(0, 0, windowWidth, windowHeight);
 		roboRio.setBounds(windowPosX, windowPosY, windowWidth, windowHeight);

@@ -59,6 +59,7 @@ public class DriverStation {
 		windowPosY = (int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight()-windowHeight)*(windowPosY/100.0));
 		
 		driverStation = new JFrame("Driver Station");
+		driverStation.setResizable(false);
 		driverStation.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		driverStation.setBounds(0, 0, windowWidth, windowHeight);
 		driverStation.setBounds(windowPosX, windowPosY, windowWidth, windowHeight);
