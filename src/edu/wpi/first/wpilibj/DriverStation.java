@@ -22,8 +22,14 @@ public class DriverStation {
 	private JPanel contentPane;
 	private JButton buttonEnable;
 	private JButton buttonDisable;
+	private JButton buttonTeleOp;
+	private JButton buttonAutonomous;
+	private JButton buttonTest;
 	
-	private boolean isEnabled;
+	private boolean isEnabled = false;
+	private boolean isTeleop = true;
+	private boolean isAutonomous;
+	private boolean isTest;
 	
 	public static DriverStation getInstance() {
 		if (instance == null) {
@@ -70,7 +76,7 @@ public class DriverStation {
 				buttonDisable.setEnabled(true);
 			}
 		});
-		buttonEnable.setBounds(85, 75, 117, 29);
+		buttonEnable.setBounds(38, 116, 117, 29);
 		contentPane.add(buttonEnable);
 		
 		buttonDisable = new JButton("DISABLE");
@@ -82,8 +88,53 @@ public class DriverStation {
 				buttonDisable.setEnabled(false);
 			}
 		});
-		buttonDisable.setBounds(201, 75, 117, 29);
+		buttonDisable.setBounds(150, 116, 117, 29);
 		contentPane.add(buttonDisable);
+		
+		buttonTeleOp = new JButton("TeleOperated");
+		buttonTeleOp.setEnabled(false);
+		buttonTeleOp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isTeleop = true;
+				isAutonomous = false;
+				isTest = false;
+				buttonTeleOp.setEnabled(false);
+				buttonAutonomous.setEnabled(true);
+				buttonTest.setEnabled(true);
+			}
+		});
+		buttonTeleOp.setBounds(38, 18, 117, 29);
+		contentPane.add(buttonTeleOp);
+		
+		buttonAutonomous = new JButton("Autonomous");
+		buttonAutonomous.setEnabled(true);
+		buttonAutonomous.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isTeleop = false;
+				isAutonomous = true;
+				isTest = false;
+				buttonTeleOp.setEnabled(true);
+				buttonAutonomous.setEnabled(false);
+				buttonTest.setEnabled(true);
+			}
+		});
+		buttonAutonomous.setBounds(38, 41, 117, 29);
+		contentPane.add(buttonAutonomous);
+		
+		buttonTest = new JButton("Test");
+		buttonTest.setEnabled(true);
+		buttonTest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isTeleop = false;
+				isAutonomous = false;
+				isTest = true;
+				buttonTeleOp.setEnabled(true);
+				buttonAutonomous.setEnabled(true);
+				buttonTest.setEnabled(false);
+			}
+		});
+		buttonTest.setBounds(38, 71, 117, 29);
+		contentPane.add(buttonTest);
 		driverStation.setVisible(true);
 	}
 	
@@ -96,14 +147,14 @@ public class DriverStation {
 	}
 	
 	public boolean isAutonomous() {
-		return false;
+		return isAutonomous;
 	}
 	
 	public boolean isTest() {
-		return false;
+		return isTest;
 	}
 	
 	public boolean isOperatorControl() {
-		return true;
+		return isTeleop;
 	}
 }
