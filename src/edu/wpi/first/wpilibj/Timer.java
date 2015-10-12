@@ -6,8 +6,11 @@ public class Timer {
 		try {
 			Thread.sleep((long)(seconds*100));
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public static double getFPGATimestamp() {
+		return System.currentTimeMillis()*1000.0;
 	}
 }

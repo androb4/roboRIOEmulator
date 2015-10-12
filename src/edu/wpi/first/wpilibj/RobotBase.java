@@ -35,6 +35,9 @@ public abstract class RobotBase {
 	
 	public static void main(String[] args) {
 		System.out.println("Main");
+		
+		RobotState.SetImplementation(DriverStation.getInstance());
+		
 		RobotBase robot = null;
 		try {
 			robot = (RobotBase)RobotBase.class.getClassLoader().loadClass(RobotClassReader.getRobotClass()).newInstance();

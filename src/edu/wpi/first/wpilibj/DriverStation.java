@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class DriverStation {	
+public class DriverStation implements RobotState.Interface {	
 	private static volatile DriverStation instance = null;
 	
 	private int windowHeight = 200;
