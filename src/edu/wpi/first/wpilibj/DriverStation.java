@@ -1,11 +1,21 @@
 package edu.wpi.first.wpilibj;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.androb4.roborioemulator.utils.ReorderableJList;
+
+import net.java.games.input.Controller;
+import net.java.games.input.DirectAndRawInputEnvironmentPlugin;
+import net.java.games.input.LinuxEnvironmentPlugin;
+import net.java.games.input.OSXEnvironmentPlugin;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -25,6 +35,7 @@ public class DriverStation implements RobotState.Interface {
 	private JButton buttonTeleOp;
 	private JButton buttonAutonomous;
 	private JButton buttonTest;
+	private final ReorderableJList<Controller> joysticks = new ReorderableJList<Controller>();
 	
 	private boolean isEnabled = false;
 	private boolean isTeleop = true;
@@ -55,6 +66,8 @@ public class DriverStation implements RobotState.Interface {
 	}
 	
 	private void init() {
+		
+		refreshControllers();
 		windowPosX = (int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth()-windowWidth)*(windowPosX/100.0));
 		windowPosY = (int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight()-windowHeight)*(windowPosY/100.0));
 		
@@ -136,7 +149,50 @@ public class DriverStation implements RobotState.Interface {
 		});
 		buttonTest.setBounds(38, 71, 117, 29);
 		contentPane.add(buttonTest);
+		
+		JPanel controllers = new JPanel( new BorderLayout() );
+		controllers.setLocation(450, 89);
+		controllers.add( joysticks, BorderLayout.CENTER );
+		
+		contentPane.add(controllers);
+		
 		driverStation.setVisible(true);
+	}
+	
+	private boolean isValidControllerType( Controller.Type type ) {
+		return type == Controller.Type.STICK || type == Controller.Type.GAMEPAD;
+	}
+	
+	private Controller[] getAllControllers() {
+		String os = System.getProperty( "os.name" ).trim().toLowerCase();
+		if ( os.contains( "windows" ) ) {
+			return new DirectAndRawInputEnvironmentPlugin().getControllers();
+		} else if ( os.contains( "mac" ) ) {
+			return new OSXEnvironmentPlugin().getControllers();
+		} else if ( os.contains( "linux" ) ) {
+			return new LinuxEnvironmentPlugin().getControllers();
+		}
+		return null;
+	}
+	
+	private void refreshControllers() {
+		System.out.println( "Refreshing controller list..." );
+		joysticks.clear();
+		Controller[] all = getAllControllers();
+		for ( int i = 0; i < all.length; i++ ) {
+			if ( isValidControllerType( all[i].getType() ) ) {
+				joysticks.addElement( all[i] );
+			}
+		}
+		System.out.println( joysticks.getList().getModel().getSize() + " controller(s) found." );
+	}
+	
+	private Controller getController( int port ) {
+		DefaultListModel<Controller> model = joysticks.getDefaultListModel();
+		if ( port <= 0 || port > model.size() ) {
+			return null;
+		}
+		return model.get( port - 1 );
 	}
 	
 	public boolean isEnabled() {
